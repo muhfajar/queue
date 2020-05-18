@@ -42,6 +42,7 @@ func NewQueue(w *Worker) *Worker {
 
 func (w *Worker) Start() {
 	var wg sync.WaitGroup
+	var mx = &sync.Mutex{}
 
 	defer func() {
 		close(w.tasks)
@@ -63,7 +64,9 @@ func (w *Worker) Start() {
 					rs := task()
 
 					if w.Set.TaskDone != nil {
+						mx.Lock()
 						w.Set.TaskDone(rs)
+						mx.Unlock()
 					}
 
 					wg.Done()
