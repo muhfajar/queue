@@ -1,6 +1,6 @@
 # Goroutine concurrency queue process
-## Builds
 [![Build Status](https://travis-ci.org/muhfajar/queue.svg?branch=master)](https://travis-ci.org/muhfajar/queue)
+[![codecov](https://codecov.io/gh/muhfajar/queue/branch/master/graph/badge.svg)](https://codecov.io/gh/muhfajar/queue)
 ## Example
 ```
   import "github.com/muhfajar/queue"
