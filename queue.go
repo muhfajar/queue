@@ -11,7 +11,7 @@ type Worker struct {
 }
 
 type Callback struct {
-	TaskDone  func(interface{})
+	TaskDone  func(...interface{})
 	QueueDone func()
 }
 
@@ -70,6 +70,8 @@ func (w *Worker) Start() {
 					}
 
 					wg.Done()
+				default:
+					break
 				}
 			}
 		}()

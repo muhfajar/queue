@@ -15,8 +15,8 @@ func TestWorker_Append(t *testing.T) {
 func TestWorker_Start(t *testing.T) {
 	q := NewQueue(&Worker{
 		Set: Callback{
-			TaskDone: func(result interface{}) {
-				rs := result.(bool)
+			TaskDone: func(result ...interface{}) {
+				rs := result[0].(bool)
 				t.Logf("Callback: ok :: %v", rs)
 			},
 		},
@@ -35,8 +35,8 @@ func TestNewQueue(t *testing.T) {
 		Thread: 3,
 		Alloc:  ALLOC,
 		Set: Callback{
-			TaskDone: func(result interface{}) {
-				rs := result.(string)
+			TaskDone: func(result ...interface{}) {
+				rs := result[0].(string)
 				TOTAL++
 				t.Log(rs)
 			},
