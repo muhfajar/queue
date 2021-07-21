@@ -1,10 +1,14 @@
 package queue
 
 import (
-	"fmt"
 	"testing"
 	"time"
 )
+
+type data struct {
+	index int
+	value string
+}
 
 func TestWorker_Append(t *testing.T) {
 	NewQueue(&Worker{}).Append(func() interface{} {
@@ -15,8 +19,8 @@ func TestWorker_Append(t *testing.T) {
 func TestWorker_Start(t *testing.T) {
 	q := NewQueue(&Worker{
 		Set: Callback{
-			TaskDone: func(result ...interface{}) {
-				rs := result[0].(bool)
+			TaskDone: func(result interface{}) {
+				rs := result.(bool)
 				t.Logf("Callback: ok :: %v", rs)
 			},
 		},
@@ -35,8 +39,8 @@ func TestNewQueue(t *testing.T) {
 		Thread: 3,
 		Alloc:  ALLOC,
 		Set: Callback{
-			TaskDone: func(result ...interface{}) {
-				rs := result[0].(string)
+			TaskDone: func(result interface{}) {
+				rs := result.(data)
 				TOTAL++
 				t.Log(rs)
 			},
@@ -51,7 +55,10 @@ func TestNewQueue(t *testing.T) {
 		index, value := i, s
 		task := func() interface{} {
 			time.Sleep(time.Duration(1) * time.Second)
-			return fmt.Sprintf("pid: %d :: %s", index, value)
+			return data{
+				index: index,
+				value: value,
+			}
 		}
 
 		q.Append(task)

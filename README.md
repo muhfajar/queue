@@ -33,3 +33,4 @@
  
   q.Start()
 ```
+See `queue_test.go` for a working example.
